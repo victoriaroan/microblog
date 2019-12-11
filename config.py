@@ -4,11 +4,12 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
-    # General Config
+    # General
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
     ADMINS = ['test@example.com']
+    LANGUAGES = ['en', 'es']
 
-    # Microblog Config
+    # Microblog
     POSTS_PER_PAGE = 25
 
     # Database
