@@ -7,5 +7,7 @@ flask-migrate
 flask-moment
 flask-sqlalchemy
 flask-wtf
+guess_language-spirit
 pyjwt
 python-dotenv
+requests
