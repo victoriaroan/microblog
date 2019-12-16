@@ -1,3 +1,4 @@
+elasticsearch
 flask
 flask-babel
 flask-bootstrap

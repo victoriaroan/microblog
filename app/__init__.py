@@ -2,6 +2,7 @@ import logging
 import os
 from logging.handlers import RotatingFileHandler, SMTPHandler
 
+from elasticsearch import Elasticsearch
 from flask import current_app, Flask, request
 from flask_babel import Babel, lazy_gettext as _l
 from flask_bootstrap import Bootstrap
@@ -38,6 +39,10 @@ def create_app(config_class=Config):
     login.login_view = 'login'
     login.login_message = _l('Please log in to access this page.')
 
+    app.elasticsearch = Elasticsearch(
+        [app.config['ELASTICSEARCH_HOST']]
+    ) if app.config['ELASTICSEARCH_HOST'] else None
+
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
 
@@ -53,7 +58,8 @@ def create_app(config_class=Config):
         if app.config['MAIL_SERVER']:
             auth = None
             if app.config['MAIL_USERNAME'] or app.config['MAIL_PASSWORD']:
-                auth = (app.config['MAIL_USERNAME'], app.config['MAIL_PASSWORD'])
+                auth = (app.config['MAIL_USERNAME'],
+                        app.config['MAIL_PASSWORD'])
             secure = () if app.config['MAIL_USE_TLS'] else None
 
             mail_handler = SMTPHandler(
@@ -84,6 +90,7 @@ def create_app(config_class=Config):
 
 
 from app import models
+
 
 @babel.localeselector
 def get_locale():
