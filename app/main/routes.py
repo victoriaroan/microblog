@@ -69,6 +69,13 @@ def user(username):
     )
 
 
+@bp.route('/user/<username>/summary')
+@login_required
+def user_summary(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    return render_template('user_summary.html', user=user)
+
+
 @bp.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
