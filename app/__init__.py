@@ -36,7 +36,7 @@ def create_app(config_class=Config):
     mail.init_app(app)
     moment.init_app(app)
 
-    login.login_view = 'login'
+    login.login_view = 'auth.login'
     login.login_message = _l('Please log in to access this page.')
 
     app.elasticsearch = Elasticsearch(

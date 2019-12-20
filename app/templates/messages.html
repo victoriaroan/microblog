@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    <h1>{{ _('Search Results') }}</h1>
-    {% for post in posts %}
+    <h1>{{ _('Messages') }}</h1>
+    {% for post in messages %}
         {% include "_post.html" %}
     {% endfor %}
-    {% with  prev=_('Newer results'), next=_('Older results') %}
+    {% with  prev=_('Newer messages'), next=_('Older messages') %}
         {% include "_pager.html" %}
     {% endwith %}
 {% endblock %}

@@ -14,5 +14,7 @@
     {% for post in posts %}
         {% include "_post.html" %}
     {% endfor %}
-    {% include "_pager.html" %}
+    {% with  prev=_('Newer posts'), next=_('Older posts') %}
+        {% include "_pager.html" %}
+    {% endwith %}
 {% endblock %}
