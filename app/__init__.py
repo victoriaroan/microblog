@@ -2,6 +2,7 @@ import logging
 import os
 from logging.handlers import RotatingFileHandler, SMTPHandler
 
+import rq
 from elasticsearch import Elasticsearch
 from flask import current_app, Flask, request
 from flask_babel import Babel, lazy_gettext as _l
@@ -11,6 +12,7 @@ from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
+from redis import Redis
 
 from config import Config
 
@@ -42,6 +44,9 @@ def create_app(config_class=Config):
     app.elasticsearch = Elasticsearch(
         [app.config['ELASTICSEARCH_HOST']]
     ) if app.config['ELASTICSEARCH_HOST'] else None
+
+    app.redis = Redis.from_url(app.config['REDIS_URL'])
+    app.task_queue = rq.Queue('microblog-tasks', connection=app.redis)
 
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
